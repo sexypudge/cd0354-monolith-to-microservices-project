@@ -44,6 +44,15 @@ jobs:
         run: |
           docker build -t luongnv1810/reverseproxy:latest -f ./udagram-reverseproxy/Dockerfile ./udagram-reverseproxy
           docker push luongnv1810/reverseproxy:latest
+          
+          docker build -t luongnv1810/udagram-api-feed:latest -f ./udagram-api-feed/Dockerfile ./udagram-api-feed
+          docker push luongnv1810/udagram-api-feed:latest
+          
+          docker build -t luongnv1810/udagram-api-user:latest -f ./udagram-api-user/Dockerfile ./udagram-api-user
+          docker push luongnv1810/udagram-api-user:latest
+          
+          docker build -t luongnv1810/udagram-frontend:latest -f ./udagram-frontend/Dockerfile ./udagram-frontend
+          docker push luongnv1810/udagram-frontend:latest
 
 #      - name: Update kube config
 #        run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
