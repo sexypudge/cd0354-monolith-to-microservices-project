@@ -28,7 +28,8 @@ export class ApiService {
   }
 
   setAuthToken(token) {
-    this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `jwt ${token}`);
+    this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `jwt ${token}`)
+        .append('Access-Control-Allow-Origin', 'http://localhost:8100/');
     this.token = token;
   }
 
