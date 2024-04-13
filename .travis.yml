@@ -22,7 +22,8 @@ script:
 
 # Tasks to perform after the process is successful. Formatting the Docker username and password as below enables you to programmatically log in without having the password exposed in logs.
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+#  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+  - docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push luongnv1810/udagram-reverseproxy:latest
   - docker push luongnv1810/udagram-api-feed:latest
   - docker push luongnv1810/udagram-api-user:latest
