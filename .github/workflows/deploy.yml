@@ -42,7 +42,7 @@ jobs:
           DOCKER_HUB: luongnv1810
           IMAGE_TAG: ${{ steps.commit.outputs.short }}
         run: |
-          docker build -t luongnv1810/reverse-proxy:latest -f ./udagram-reverseproxy/Dockerfile ./udagram-reverseproxy
+          docker build -t luongnv1810/reverse-proxy:latest -f ./udagram-reverseproxy/Dockerfile ./reverse-proxy
           docker push luongnv1810/reverse-proxy:latest
 
 #      - name: Update kube config
