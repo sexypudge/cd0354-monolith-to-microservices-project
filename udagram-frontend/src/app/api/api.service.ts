@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 
 const API_HOST = environment.apiHost;
+const ORIGIN = window.location.origin;
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class ApiService {
 
   setAuthToken(token) {
     this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `jwt ${token}`)
-        .append('Access-Control-Allow-Origin', 'http://localhost:8100/');
+        .append('Access-Control-Allow-Origin', ORIGIN);
     this.token = token;
   }
 
