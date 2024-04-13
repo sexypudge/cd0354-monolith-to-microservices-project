@@ -1,24 +1,19 @@
 # Screenshots:
 * check folder for all screenshot: ./screenshots
 
-## NOTE: I'm more familiar with Github Action so I decided to use it to deploy Udagram App easily
-
 ## Deployment Pipeline: 
-## GitHub Action
-* For pipeline config of GitHub Action, Please check 
-[deploy.yml](..%2F.github%2Fworkflows%2Fdeploy.yml)
+## TravisCI
+* For pipeline config of TravisCi, Please check 
+[.travis.yml](..%2F.travis.yml)
 
 * For DockerHub I used to push my images to, please visit:
 * https://hub.docker.com/u/luongnv1810
 
-* GitHub Action Secret Env setting:
-* ![Github_Action_setting.png](Github_Action_setting.png)
-
-* Everytime we commit code to Github repo, Github Action will automatically detect it and start runnin the pipeline 
-*[deploy.yml](..%2F.github%2Fworkflows%2Fdeploy.yml) 
+* Everytime we commit code to Github repo, TravisCI will automatically detect it and start runnin the pipeline 
+[.travis.yml](..%2F.travis.yml)
 
 * Screenshot showing a successful build and deploy job, check 
-* ![Udagram_Github_action_Deployment.JPG](Udagram_Github_action_Deployment.JPG)
+* ![TravisCI_Successfull_job.png](TravisCI_Successfull_job.png)
 
 ## Kubernetes: please check folder ./screenshots for below info
 * A screenshots of kubectl commands show the Frontend and API projects deployed in Kubernetes.
