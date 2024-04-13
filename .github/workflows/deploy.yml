@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set short git commit SHA
+        id: commit
+        uses: prompt/actions-commit-hash@v2
 
       - name: Check out code
         uses: actions/checkout@v2
@@ -33,26 +36,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-#      - name: Login to Amazon ECR
-#        id: login-ecr
-#        uses: aws-actions/amazon-ecr-login@v1
-
       - name: Build, tag, and push image to Amazon Docker hub
         env:
           DOCKER_HUB: luongnv1810
           IMAGE_TAG: ${{ steps.commit.outputs.short }}
         run: |
-          docker build -t luongnv1810/reverseproxy:latest -f ./udagram-reverseproxy/Dockerfile ./udagram-reverseproxy
-          docker push luongnv1810/reverseproxy:latest
+          docker build -t $DOCKER_HUB/reverseproxy:$IMAGE_TAG -f ./udagram-reverseproxy/Dockerfile ./udagram-reverseproxy
+          docker push $DOCKER_HUB/reverseproxy:$IMAGE_TAG
           
-          docker build -t luongnv1810/udagram-api-feed:latest -f ./udagram-api-feed/Dockerfile ./udagram-api-feed
-          docker push luongnv1810/udagram-api-feed:latest
+          docker build -t $DOCKER_HUB/udagram-api-feed:$IMAGE_TAG -f ./udagram-api-feed/Dockerfile ./udagram-api-feed
+          docker push $DOCKER_HUB/udagram-api-feed:$IMAGE_TAG
           
-          docker build -t luongnv1810/udagram-api-user:latest -f ./udagram-api-user/Dockerfile ./udagram-api-user
-          docker push luongnv1810/udagram-api-user:latest
+          docker build -t $DOCKER_HUB/udagram-api-user:$IMAGE_TAG -f ./udagram-api-user/Dockerfile ./udagram-api-user
+          docker push $DOCKER_HUB/udagram-api-user:$IMAGE_TAG
           
-          docker build -t luongnv1810/udagram-frontend:latest -f ./udagram-frontend/Dockerfile ./udagram-frontend
-          docker push luongnv1810/udagram-frontend:latest
+          docker build -t $DOCKER_HUB/udagram-frontend:$IMAGE_TAG -f ./udagram-frontend/Dockerfile ./udagram-frontend
+          docker push $DOCKER_HUB/udagram-frontend:$IMAGE_TAG
 
 #      - name: Update kube config
 #        run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
@@ -62,6 +61,6 @@ jobs:
 #          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
 #          IMAGE_TAG: ${{ steps.commit.outputs.short }}
 #        run: |
-#          sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" manifests/hello-app-deployment.yaml && \
-#          kubectl apply -f manifests/hello-app-deployment.yaml
-#          kubectl apply -f manifests/hello-app-service.yaml
+#          sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" manifests/hello-app-reverseproxy-backend-user-deployment.yaml && \
+#          kubectl apply -f manifests/hello-app-reverseproxy-backend-user-deployment.yaml
+#          kubectl apply -f manifests/hello-app-reverseproxy-backend-user-service.yaml

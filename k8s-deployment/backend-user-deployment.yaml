@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-user
+  labels:
+    app: backend-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-user
+  template:
+    metadata:
+      labels:
+        app: backend-user
+    spec:
+      containers:
+      - name: backend-user
+        image: luongnv1810/udagram-api-user
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "150m"
+            memory: "900Mi"
+          limits:
+            cpu: "300m"
+            memory: "1500Mi"
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: env-secret
+                key: JWT_SECRET
+        envFrom:
+          - configMapRef:
+              name: env-config-map
+          - secretRef:
+              name: env-secret
+          - secretRef:
+              name: aws-secret
+        volumeMounts:
+          - mountPath: "/root/.aws/"
+            name: aws-secret
+            readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: aws-secret
+          secret:
+            secretName: aws-secret
+
+

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: luongnv1810/udagram-frontend
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "150m"
+            memory: "800Mi"
+          limits:
+            cpu: "300m"
+            memory: "1500Gi"
+        ports:
+        - containerPort: 80
+#        env:
+#          - name: PROFILES_ACTIVE
+#            value: "EXAMPLE"
+        envFrom:
+          - configMapRef:
+              name: env-config-map
+          - secretRef:
+              name: env-secret
+          - secretRef:
+              name: aws-secret
+      restartPolicy: Always
+
+

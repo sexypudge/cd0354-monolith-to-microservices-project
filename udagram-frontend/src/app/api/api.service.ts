@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 
 const API_HOST = environment.apiHost;
-const ORIGIN = window.location.origin;
+const ORIGIN = "http://a992a884e69144ef7ab7da821e3b77c8-634470162.us-east-1.elb.amazonaws.com/home";
 
 @Injectable({
   providedIn: 'root'

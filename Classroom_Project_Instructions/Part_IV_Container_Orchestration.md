@@ -86,10 +86,10 @@ kubectl apply -f aws-secret.yaml
 kubectl apply -f env-secret.yaml
 kubectl apply -f env-configmap.yaml
 # Deployments - Double check the Dockerhub image name and version in the deployment files
-kubectl apply -f backend-feed-deployment.yaml
+kubectl apply -f backend-feed-reverseproxy-backend-user-deployment.yaml
 # Do the same for other three deployment files
 # Service
-kubectl apply -f backend-feed-service.yaml
+kubectl apply -f backend-feed-reverseproxy-backend-user-service.yaml
 # Do the same for other three service files
 ```
 Make sure to check the image names in the deployment files above. 
