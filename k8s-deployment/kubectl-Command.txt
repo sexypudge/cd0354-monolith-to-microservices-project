@@ -1,0 +1,21 @@
+eksctl create cluster --name MyEKSCluster --nodegroup-name MyEKSCluster-node-group  --node-type m5.large --nodes-min 2 --nodes-max 3 --managed --asg-access --zones=us-east-1a,us-east-1b
+kubectl apply -f backend-user-deployment.yaml
+kubectl apply -f backend-feed-deployment.yaml
+kubectl apply -f backend-feed-service.yaml
+kubectl apply -f backend-user-service.yaml
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f frontend-service.yaml
+kubectl apply -f reverseproxy-deployment.yaml
+kubectl apply -f reverseproxy-service.yaml 
+kubectl apply -f aws-secret.yaml
+kubectl apply -f env-secret.yaml
+kubectl apply -f env-configmap.yaml
+kubectl expose deployment frontend --type=LoadBalancer --name=publicfrontend
+kubectl expose deployment reverseproxy --type=LoadBalancer --name=publicreverseproxy
+
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml # deploy metric server
+
+
+kubectl get deployment metrics-server -n kube-system #Verify that the metrics-server deployment is running the desired number of Pods with the following command.
+kubectl autoscale deployment backend-user --cpu-percent=70 --min=3 --max=5
+kubectl get pod backend-user-8fcc66764-f6kgj --output=yaml

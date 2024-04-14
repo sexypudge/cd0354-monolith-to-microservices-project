@@ -39,7 +39,7 @@ kubectl describe services
 ```bash
 kubectl describe hpa
 ```
-* ![udagram_hpa.JPG](udagram_hpa.JPG)
+* ![udagram_describe_hpa.png](udagram_describe_hpa.png)
 
 
 * To verify that you have set up logging with a backend application:
